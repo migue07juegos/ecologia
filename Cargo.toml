@@ -8,11 +8,11 @@ build = "build.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-slint = { version = "1.5", features = ["renderer-skia-vulkan"] }
-plotters = { version = "0.3.5", default-features = false, features = ["bitmap_backend", "surface_series", "fontconfig-dlopen", "ttf", "area_series", "full_palette", "line_series"] }
+slint = { version = "1.6" }
+plotters = { version = "0.3.6", default-features = false, features = ["bitmap_backend", "surface_series", "fontconfig-dlopen", "ttf", "area_series", "full_palette", "line_series"] }
 
 [build-dependencies]
-slint-build = "1.5"
+slint-build = "1.6"
 
 [profile.release]
 codegen-units = 1
