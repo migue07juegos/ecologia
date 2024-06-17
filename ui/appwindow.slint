@@ -6,38 +6,49 @@ export component MainWindow inherits Window {
     out property <int> chart_width;
     out property <int> chart_height;
     property <length> mainHeight;
+    out property <float> crecimiento;
+    out property <float> inicial;
+    out property <int> tiempo;
 
-    pure callback render_plot(int, int) -> image;
+    pure callback render_plot(int, int, float, float, int) -> image;
 
     title: "Gráfica Poblacional";
     preferred-width: 800px;
     preferred-height: 600px;
 
-    HorizontalBox {
+    container := HorizontalBox {
         VerticalBox {
-            LineEdit {
+            min-width: container.width / 4;
+
+            crecimiento_input := LineEdit {
                 placeholder-text: "Ingresa la tasa de crecimiento poblacional";
+                input-type: decimal;
             }
 
-            LineEdit {
+            inicial_input := LineEdit {
                 placeholder-text: "Ingresa el valor inicial de la población";
+                input-type: decimal;
             }
 
-            LineEdit {
+            tiempo_input := LineEdit {
                 placeholder-text: "Ingresa el tiempo";
+                input-type: number;
             }
 
             Button {
                 text: "Renderizar";
                 clicked => {
-                    root.render_plot(chart-image.width / 1px, chart-image.height / 1px);
+                    root.crecimiento = crecimiento_input.text.to-float();
+                    root.inicial = inicial_input.text.to-float();
+                    root.tiempo = tiempo_input.text.to-float();
+                    chart-image.source = root.render_plot(chart-image.width / 1px, chart-image.height / 1px, root.crecimiento, root.inicial, root.tiempo);
                 }
             }
         }
 
         VerticalBox {
             chart_image := Image {
-                source: root.render_plot(800, 1000);
+                source: root.render_plot(800, 1000, 1, 1, 1);
                 touch := TouchArea {
                     property <float> pressed-pitch;
                     property <float> pressed-yaw;
