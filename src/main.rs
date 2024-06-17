@@ -1,3 +1,5 @@
+use std::f32::consts::E;
+
 use plotters::prelude::full_palette::GREY;
 use plotters::prelude::*;
 use plotters::series::AreaSeries;
@@ -33,20 +35,29 @@ fn render_plot(width: i32, height: i32) -> slint::Image {
 
     let root = backend.into_drawing_area();
 
+    let mut data2: Vec<f32> = Vec::new();
+    let crecimiento = 0.04;
+    let inicial = 200.0;
+    let tiempo_max = 20;
     root.fill(&GREY).expect("error filling drawing area");
 
     let mut chart = ChartBuilder::on(&root)
         .set_label_area_size(LabelAreaPosition::Left, 40)
         .set_label_area_size(LabelAreaPosition::Bottom, 40)
-        .build_cartesian_2d(0..10, 0..50)
+        .build_cartesian_2d(
+            0..tiempo_max + 10,
+            0..(100.0 + inicial * E.powf(crecimiento * tiempo_max as f32)) as i32,
+        )
         .unwrap();
-
     chart.configure_mesh().draw().expect("error drawing");
-    let data = [25, 37, 15, 32, 45, 33, 32, 10, 29, 0, 21];
+
+    for i in 0..=tiempo_max {
+        data2.push(inicial * E.powf(crecimiento * i as f32));
+    }
 
     chart
         .draw_series(
-            AreaSeries::new((0..).zip(data.iter().map(|x| *x)), 0, &RED.mix(0.2))
+            AreaSeries::new((0..).zip(data2.iter().map(|x| *x as i32)), 0, &RED.mix(0.2))
                 .border_style(&RED),
         )
         .expect("error drawing series");

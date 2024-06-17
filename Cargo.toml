@@ -9,7 +9,7 @@ build = "build.rs"
 
 [dependencies]
 slint = { version = "1.5", features = ["renderer-skia-vulkan"] }
-plotters = { version = "0.3.5", default-features = false, features = ["bitmap_backend", "surface_series", "fontconfig-dlopen", "ttf", "area_series", "full_palette"] }
+plotters = { version = "0.3.5", default-features = false, features = ["bitmap_backend", "surface_series", "fontconfig-dlopen", "ttf", "area_series", "full_palette", "line_series"] }
 
 [build-dependencies]
 slint-build = "1.5"
@@ -17,5 +17,4 @@ slint-build = "1.5"
 [profile.release]
 codegen-units = 1
 lto = "fat" 
-rustflags = ["-C", "target-cpu=native"]
 panic = "abort"
