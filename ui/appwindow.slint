@@ -48,7 +48,7 @@ export component MainWindow inherits Window {
 
         VerticalBox {
             chart_image := Image {
-                source: root.render_plot(800, 1000, 1, 1, 1);
+                source: root.render_plot(800, 1000, 0.02, 100, 100);
                 touch := TouchArea {
                     property <float> pressed-pitch;
                     property <float> pressed-yaw;
